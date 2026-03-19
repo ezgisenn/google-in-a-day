@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crawler - Create Crawler</title>
+    <link rel="stylesheet" href="/demo/css/style.css?v=2">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/demo/search.html" class="logo">🍓 Crawler</a>
+            <ul class="nav-links">
+                <li><a href="/demo/search.html">Search</a></li>
+                <li><a href="/demo/crawler.html" class="active">Create Crawler</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="crawler-input-bar">
+        <div class="crawler-input-container">
+            <div class="stats-display">
+                <div class="stat-item">
+                    <span class="stat-label">URLs Visited:</span>
+                    <span class="stat-value" id="statVisitedUrls">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Words in DB:</span>
+                    <span class="stat-value" id="statWordsInDb">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">🍓 Active Crawlers:</span>
+                    <span class="stat-value" id="statActiveCrawlers">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Created:</span>
+                    <span class="stat-value" id="statTotalCrawlers">-</span>
+                </div>
+                <div class="stat-actions">
+                    <button id="clearDataBtn" class="btn-small btn-danger" title="Clear All Data">
+                        🗑️ Clear History
+                    </button>
+                    <button id="refreshStatsBtn" class="btn-small btn-secondary" title="Refresh Statistics">
+                        🔄
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="form-container compact-form">
+            <h1>🚀 Create New Crawler</h1>
+            
+            <form id="crawlerForm" class="slim-form">
+                <div class="form-row">
+                    <div class="form-group flex-2">
+                        <label for="origin">Origin URL *</label>
+                        <input type="url" id="origin" class="form-input" placeholder="https://www.wikipedia.org/" value="https://www.wikipedia.org/" required>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="maxDepth">Max Depth *</label>
+                        <input type="number" id="maxDepth" class="form-input" min="1" max="10" value="3" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        🍓 Start Crawler
+                    </button>
+                </div>
+            </form>
+
+            <div class="success" id="successMessage" style="display: none;"></div>
+            <div class="error" id="errorMessage" style="display: none;"></div>
+            <div class="loading" id="loadingSpinner" style="display: none;">
+                🔄 Creating crawler...
+            </div>
+        </div>
+
+        <div class="form-container" style="margin-top: 2rem;">
+            <h2>📋 Recent Crawlers</h2>
+            <div id="recentCrawlers">
+                <div class="loading">Loading recent crawlers...</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/demo/js/crawler.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crawler - Search</title>
+    <link rel="stylesheet" href="/demo/css/style.css?v=2">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/demo/search.html" class="logo">🍓 Crawler</a>
+            <ul class="nav-links">
+                <li><a href="/demo/search.html" class="active">Search</a></li>
+                <li><a href="/demo/crawler.html">Create Crawler</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="search-container">
+            <div class="search-logo">🔍 Search</div>
+            
+            <form class="search-form" id="searchForm">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search crawled content..." autocomplete="off" required>
+                <div class="search-buttons">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-container" id="resultsContainer" style="display: none;">
+            <div id="resultsInfo"></div>
+            <div id="resultsList"></div>
+        </div>
+
+        <div class="loading" id="loadingSpinner" style="display: none;">
+            <div>🔄 Searching...</div>
+        </div>
+
+        <div class="error" id="errorMessage" style="display: none;"></div>
+    </main>
+
+    <script src="/demo/js/search.js?v=2"></script>
+</body>
+</html>

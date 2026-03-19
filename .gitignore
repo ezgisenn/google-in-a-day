@@ -1,0 +1,9 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Project specific storage and history
+storage/
+*.data
+history.json
