@@ -111,6 +111,20 @@ class CrawlerApp {
             document.getElementById('statActiveCrawlers').textContent = data.total_active_crawlers;
             document.getElementById('statTotalCrawlers').textContent = data.total_crawlers_created;
 
+            document.getElementById('statQueueDepth').textContent = data.total_queue_depth || 0;
+            
+            const statusEl = document.getElementById('statSystemStatus');
+            const statusText = data.system_status || "Stable";
+            statusEl.textContent = statusText;
+
+            if (statusText === "Stable") {
+                statusEl.className = "stat-value status-ok";
+            } else if (statusText === "Heavy Load") {
+                statusEl.className = "stat-value status-warning";
+            } else {
+                statusEl.className = "stat-value status-danger";
+            }
+
             const activeCrawlersElement = document.getElementById('statActiveCrawlers');
             if (data.total_active_crawlers > 0) {
                 activeCrawlersElement.style.backgroundColor = '#28a745';
@@ -124,6 +138,8 @@ class CrawlerApp {
             document.getElementById('statWordsInDb').textContent = '!';
             document.getElementById('statActiveCrawlers').textContent = '!';
             document.getElementById('statTotalCrawlers').textContent = '!';
+            document.getElementById('statQueueDepth').textContent = '!';
+            document.getElementById('statSystemStatus').textContent = 'Error';
         }
     }
 

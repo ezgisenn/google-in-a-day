@@ -105,15 +105,27 @@ class CrawlerService:
                 pass
                 
         total_visited = 0
+        total_queue_depth = 0
+        
         for cid, info in self.history.items():
             if cid in self.crawlers and self.crawlers[cid].is_alive():
-                total_visited += len(self.crawlers[cid].visited_urls)
+                job = self.crawlers[cid]
+                total_visited += len(job.visited_urls)
+                total_queue_depth += job.url_queue.qsize()
             else:
                 total_visited += info.get('visited_count', 0)
+        
+        system_status = "Stable"
+        if total_queue_depth > 1500:
+            system_status = "Throttling (High Load)"
+        elif total_queue_depth > 500:
+            system_status = "Heavy Load"
                 
         return {
             "total_crawlers_created": total_created,
             "total_active_crawlers": active,
             "total_words_in_database": total_words,
-            "total_visited_urls": total_visited
+            "total_visited_urls": total_visited,
+            "total_queue_depth": total_queue_depth,
+            "system_status": system_status
         }
