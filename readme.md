@@ -12,7 +12,7 @@
 2. Start the server by running the following command:
    ```bash
    python app.py
-   (Note: You may need to use python3 app.py depending on your system configuration).
+  (Note: You may need to use python3 app.py depending on your system configuration).
 3. The server will start and listen on port 5000.
 4. Open your web browser and navigate to: http://localhost:5000
 
