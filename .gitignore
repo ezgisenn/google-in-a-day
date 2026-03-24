@@ -3,7 +3,3 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Project specific database
-*.db
-crawlberry.db
