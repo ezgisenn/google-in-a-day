@@ -3,13 +3,13 @@ import queue
 import urllib.request
 import urllib.error
 import time
-import json
+import sqlite3
 import os
 from urllib.parse import urljoin
 from html.parser import HTMLParser
 
-# Global lock to prevent conflicts during file write operations
-file_lock = threading.Lock()
+
+db_lock = threading.Lock()
 
 class SimpleHTMLParser(HTMLParser):
     def __init__(self, base_url):
@@ -41,8 +41,6 @@ class CrawlerJob(threading.Thread):
         self.url_queue.put((origin_url, 0))
         self.visited_urls = set()
         self.is_running = True
-        
-        os.makedirs('storage', exist_ok=True)
 
     def fetch_url(self, url, retries=1):
         for attempt in range(retries + 1):
@@ -71,20 +69,15 @@ class CrawlerJob(threading.Thread):
                     words[clean_word] = words.get(clean_word, 0) + 1
         return words
 
-    def save_words_jsonl(self, words, url, depth):
-        with file_lock:
+    def save_words_db(self, words, url, depth):
+        with db_lock:
+            conn = sqlite3.connect('crawlberry.db')
+            c = conn.cursor()
             for word, frequency in words.items():
-                first_letter = word[0]
-                filename = f"storage/{first_letter}.data"
-                data = {
-                    "word": word,
-                    "frequency": frequency,
-                    "url": url,
-                    "origin_url": self.origin_url,
-                    "depth": depth
-                }
-                with open(filename, 'a', encoding='utf-8') as f:
-                    f.write(json.dumps(data) + "\n")
+                c.execute("INSERT INTO words (word, frequency, url, origin_url, depth) VALUES (?, ?, ?, ?, ?)",
+                          (word, frequency, url, self.origin_url, depth))
+            conn.commit()
+            conn.close()
 
     def run(self):
         print(f"[{self.name}] Crawl started: {self.origin_url} (Max Depth: {self.max_depth})")
@@ -109,7 +102,7 @@ class CrawlerJob(threading.Thread):
                 parser.feed(html_content)
                 
                 words = self.extract_words(parser.text_content)
-                self.save_words_jsonl(words, url, current_depth)
+                self.save_words_db(words, url, current_depth)
                 
                 for link in parser.links:
                     if link not in self.visited_urls:

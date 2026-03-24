@@ -1,9 +1,27 @@
 import json
 import os
+import sqlite3
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from services.crawler_service import CrawlerService
 from services.search_service import SearchService
+
+# Initialize Database
+def init_db():
+    conn = sqlite3.connect('crawlberry.db')
+    c = conn.cursor()
+    # Crawlers history table
+    c.execute('''CREATE TABLE IF NOT EXISTS crawlers
+                 (id TEXT PRIMARY KEY, origin_url TEXT, max_depth INTEGER, status TEXT, start_time REAL, visited_count INTEGER)''')
+    # Indexed words table
+    c.execute('''CREATE TABLE IF NOT EXISTS words
+                 (word TEXT, frequency INTEGER, url TEXT, origin_url TEXT, depth INTEGER)''')
+    # Index for faster searching
+    c.execute('''CREATE INDEX IF NOT EXISTS idx_word ON words(word)''')
+    conn.commit()
+    conn.close()
+
+init_db()
 
 crawler_service = CrawlerService()
 search_service = SearchService()

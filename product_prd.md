@@ -11,11 +11,11 @@
 ### 3.1. Web Crawler
 - **Concurrency:** Utilizes Python's `threading` module to run crawler jobs asynchronously in the background.
 - **Parsing:** Implements a custom HTML parser using `html.parser` to extract text and hyperlink references.
-- **Data Storage:** Stores extracted word frequencies and metadata (URL, depth) in local JSON Lines (`.data`) files categorized by the starting letter of the word.
+- **Data Storage:** Stores extracted word frequencies and metadata (URL, depth, origin) in a local SQLite database (`crawlberry.db`) to ensure efficient indexing, fast retrieval, and thread-safe operations.
 - **Constraints:** Supports configurable maximum crawling depth and limits queue capacity to prevent memory overflow.
 
 ### 3.2. Search Engine
-- **Indexing:** Reads from the local file-based storage to find matching keywords.
+- **Indexing:** Reads directly from the SQLite database using indexed queries to find matching keywords instantly.
 - **Ranking Algorithm:** Calculates a relevance score based on word frequency and the depth at which the word was found (Score = Frequency / (Depth + 1)).
 - **Result Presentation:** Returns search results containing the relevant URL, origin URL, and depth.
 
@@ -24,6 +24,6 @@
 - **Search Interface:** A dedicated search page allowing users to query the indexed database and view ranked results with clickable links.
 
 ## 4. Technical Specifications
-- **Backend:** Python 3.x (using `http.server`, `urllib`, `html.parser`, `threading`, `json`, `os`). No external libraries are permitted.
+- **Backend:** Python 3.x (using `http.server`, `urllib`, `html.parser`, `threading`, `sqlite3`, `json`). No external libraries are permitted.
 - **Frontend:** Pure HTML, CSS, and vanilla JavaScript.
-- **Data Persistence:** Local file system (JSON format for history, JSON Lines for indexed data).
+- **Data Persistence:** Native SQLite database using Python's built-in `sqlite3` module for both crawler history and indexed search data.
