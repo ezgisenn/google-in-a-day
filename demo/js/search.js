@@ -45,10 +45,11 @@ class SearchApp {
                 <div class="result-item">
                     <a href="${res[0]}" target="_blank" class="result-url">${res[0]}</a>
                     <div class="result-meta">
-                        Origin: ${res[1]} | Depth Found: ${res[2]}
+                        Origin: ${res[1]} | Depth Found: ${res[2]} | Frequency: <span style="font-weight:bold; color:#400ba3;">${res[3]}</span> | Relevance Score: <span style="font-weight:bold; color:#400ba3;">${res[4]}</span>
                     </div>
                 </div>
             `).join('');
+            
         } else {
             resultsInfo.innerHTML = '';
             resultsList.innerHTML = `

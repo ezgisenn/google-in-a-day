@@ -23,7 +23,7 @@
 
 **Custom HTML Parser:** Extracts textual content and hyperlinks completely from scratch using Python's native html.parser.
 
-**Live Search Engine:** Ranks search results based on a custom relevancy heuristic utilizing word frequency and link depth (Score = Frequency / (Depth + 1)). Search can run concurrently while the indexer is actively crawling.
+**Live Search Engine:** Ranks search results based on a custom relevancy heuristic utilizing word frequency, exact match bonuses, and link depth penalties (Score = (Frequency * 10) + 1000 - (Depth * 5)). Search can run concurrently while the indexer is actively crawling.
 
 **Modern Dashboard UI:** A clean, full-width responsive dashboard built strictly with pure HTML, CSS, and vanilla JS.
 

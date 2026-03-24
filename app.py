@@ -61,7 +61,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
             
         elif parsed_path.path == '/api/search':
             query = parse_qs(parsed_path.query)
-            q = query.get('q', [''])[0]
+            q = query.get('query', query.get('q', ['']))[0]
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -114,4 +114,4 @@ def run_server(port=5000):
         httpd.server_close()
 
 if __name__ == '__main__':
-    run_server(5000)
+    run_server(3600)

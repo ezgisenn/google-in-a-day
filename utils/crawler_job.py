@@ -106,10 +106,8 @@ class CrawlerJob(threading.Thread):
                 
                 for link in parser.links:
                     if link not in self.visited_urls:
-                        while self.url_queue.qsize() >= self.max_queue_capacity:
-                            print(f"[{self.name}] Queue capacity full ({self.max_queue_capacity}). Waiting for 5 seconds...")
-                            time.sleep(5)
-                        
+                        if self.url_queue.qsize() >= self.max_queue_capacity:
+                            break 
                         self.url_queue.put((link, current_depth + 1))
                         
             self.url_queue.task_done()

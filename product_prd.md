@@ -16,7 +16,7 @@
 
 ### 3.2. Search Engine
 - **Indexing:** Reads directly from the SQLite database using indexed queries to find matching keywords instantly.
-- **Ranking Algorithm:** Calculates a relevance score based on word frequency and the depth at which the word was found (Score = Frequency / (Depth + 1)).
+- **Ranking Algorithm:** Calculates a relevance score based on word frequency and the depth at which the word was found (Score = (Frequency * 10) + 1000 - (Depth * 5)).
 - **Result Presentation:** Returns search results containing the relevant URL, origin URL, and depth.
 
 ### 3.3. User Interface

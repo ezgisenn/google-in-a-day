@@ -27,22 +27,26 @@ class SearchService:
 
         for row in rows:
             url, origin_url, depth, frequency = row
-            score = frequency / (depth + 1)
-            
+            score = (frequency * 10) + 1000 - (depth * 5)
+
             if url not in results_map:
                 results_map[url] = {
                     'relevant_url': url,
                     'origin_url': origin_url,
                     'depth': depth,
+                    'frequency': 0,
                     'score': 0
-                }
-            
+               }
+
             results_map[url]['score'] += score
+            results_map[url]['frequency'] += frequency
 
         sorted_results = sorted(results_map.values(), key=lambda x: x['score'], reverse=True)
-        
+
         final_triples = []
+
         for res in sorted_results:
-            final_triples.append((res['relevant_url'], res['origin_url'], res['depth']))
-            
+    
+            final_triples.append((res['relevant_url'], res['origin_url'], res['depth'], res['frequency'], res['score']))
+
         return final_triples
