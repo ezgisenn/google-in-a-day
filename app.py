@@ -114,4 +114,4 @@ def run_server(port=5000):
         httpd.server_close()
 
 if __name__ == '__main__':
-    run_server(3600)
+    run_server(5000)
